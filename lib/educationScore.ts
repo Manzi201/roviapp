@@ -104,8 +104,9 @@ export function computeEducationPriority(
   const ictScore = Math.min(100, ictGap * 0.7 + (ictBelowNational / benchmarks.ictPct) * 100 * 0.3);
 
   // ── 2. Infrastructure gap ────────────────────────────────────
-  // School density per 1000 school-age children
-  const infraGap = inv(district.schoolsPer1000Children, 0, NST2_TARGETS.schoolsPerThousandKids);
+  // School density: range ya Rwanda districts = 2.5 (worst) – 4.8 (best)
+  // Normalise against realistic range so gaps are meaningful
+  const infraGap = inv(district.schoolsPer1000Children, 1.5, NST2_TARGETS.schoolsPerThousandKids);
   // % of expected education levels present
   const levelCoverage = inv(district.educationLevelCoverage, 0, 100);
   const infraScore = infraGap * 0.6 + levelCoverage * 0.4;
@@ -131,9 +132,9 @@ export function computeEducationPriority(
   const priorityScore = Math.round(Math.max(0, Math.min(100, raw)));
 
   const priorityLevel: EducationPriorityResult['priorityLevel'] =
-    priorityScore >= 70 ? 'Critical' :
-    priorityScore >= 50 ? 'High' :
-    priorityScore >= 30 ? 'Moderate' : 'Low';
+    priorityScore >= 58 ? 'Critical' :
+    priorityScore >= 42 ? 'High' :
+    priorityScore >= 25 ? 'Moderate' : 'Low';
 
   const pillarScores: PillarScores = {
     ict:            Math.round(ictScore),
