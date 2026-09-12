@@ -1,0 +1,64 @@
+{
+  "name": "ROVI — Rwanda Education Intelligence",
+  "short_name": "ROVI",
+  "description": "Rwanda Education Gap Intelligence Platform. Live NISR data — ICT adoption, smart classrooms, textbook ratios. NST2 & Vision 2050 aligned.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#030712",
+  "theme_color": "#2563eb",
+  "lang": "en",
+  "scope": "/",
+  "categories": ["education", "government", "productivity"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "32x32",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/kigali-bg.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "ROVI Education Gap Map — Desktop"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Education Gap Map",
+      "url": "/",
+      "description": "View district education priority map"
+    },
+    {
+      "name": "ICT & Smart",
+      "url": "/education",
+      "description": "ICT adoption and smart classrooms"
+    },
+    {
+      "name": "Simulator",
+      "url": "/simulator",
+      "description": "Model education interventions"
+    },
+    {
+      "name": "Data Query",
+      "url": "/assistant",
+      "description": "Query NISR education datasets"
+    }
+  ]
+}

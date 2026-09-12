@@ -14,7 +14,11 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Rwanda Analytics Lab' }],
   creator: 'Rwanda Analytics Lab',
-  icons: { icon: '/icon.svg', shortcut: '/icon.svg' },
+  icons: {
+    icon: '/icon.svg',
+    shortcut: '/icon.svg',
+    apple: '/icons/icon-192.svg',
+  },
   openGraph: {
     title: 'ROVI — Rwanda Education Gap Intelligence',
     description: 'Education gap analysis powered by live NISR data.',
@@ -32,6 +36,14 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="ROVI" />
+        <meta name="theme-color" content="#2563eb" />
+      </head>
       <body className="antialiased transition-colors duration-300">
         <ThemeProvider>
           <Navbar />
