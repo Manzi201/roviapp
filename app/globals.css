@@ -74,6 +74,10 @@ body > * {
   background: #4b5563;
 }
 
+/* Hide scrollbar utility — used on tab rows */
+.scrollbar-none::-webkit-scrollbar { display: none; }
+.scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
+
 * {
   box-sizing: border-box;
 }

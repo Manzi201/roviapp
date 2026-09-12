@@ -176,7 +176,7 @@ export default function EducationPage() {
   const yoyPositive = (summary.ictYoY ?? 0) >= 0;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 space-y-6 sm:space-y-8">
 
       {/* ── Hero ─────────────────────────────────────────── */}
       <HeroBanner
@@ -237,7 +237,7 @@ export default function EducationPage() {
       </div>
 
       {/* ── ICT trend + adoption gap ─────────────────────── */}
-      <div className="grid md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
         {/* Line chart: schools using / not using */}
         <div className="md:col-span-2 bg-gray-900 border border-gray-800 rounded-xl p-5">
@@ -308,9 +308,9 @@ export default function EducationPage() {
       </div>
 
       {/* ── ICT % line + ICT by level ─────────────────────── */}
-      <div className="grid md:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+        <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-5">
           <p className="text-white font-semibold text-sm">ICT Adoption Rate — % Over Time</p>
           <p className="text-gray-600 text-xs font-mono mt-0.5 mb-4">
             2017 – {summary.ictYear} · NISR ICT_use.px
@@ -338,7 +338,7 @@ export default function EducationPage() {
           )}
         </div>
 
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+        <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-5">
           <p className="text-white font-semibold text-sm">Schools Using ICT by Education Level</p>
           <p className="text-gray-600 text-xs font-mono mt-0.5 mb-4">
             {summary.ictYear} · NISR ICT_use.px
@@ -373,7 +373,7 @@ export default function EducationPage() {
             <p className="text-gray-600 text-xs">schools with smart classrooms</p>
           </div>
         </div>
-        <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-800">
+        <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-800">
           <div className="p-5">
             <p className="text-gray-500 text-xs font-mono mb-4">Overall trend — with vs. without smart classrooms</p>
             <ResponsiveContainer width="100%" height={190}>
@@ -404,8 +404,8 @@ export default function EducationPage() {
       </div>
 
       {/* ── School counts by level ────────────────────────── */}
-      <div className="grid md:grid-cols-2 gap-5">
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-5">
           <p className="text-white font-semibold text-sm">Schools by Education Level</p>
           <p className="text-gray-600 text-xs font-mono mt-0.5 mb-4">
             {summary.totalSchoolsYear} · NISR Edu_numb_scho.px
@@ -425,7 +425,7 @@ export default function EducationPage() {
         </div>
 
         {/* NST2 progress */}
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+        <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-5">
           <p className="text-white font-semibold text-sm">NST2 Target Progress</p>
           <p className="text-gray-600 text-xs font-mono mt-0.5 mb-5">current status vs. 2029 targets · NISR data</p>
           <div className="space-y-4">
@@ -471,26 +471,27 @@ export default function EducationPage() {
       </div>
 
       {/* ── Textbook ratios ───────────────────────────────── */}
-      <div className="grid md:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
-          <div className="px-5 py-4 border-b border-gray-800 flex items-center justify-between">
+          <div className="px-4 sm:px-5 py-4 border-b border-gray-800 flex items-center justify-between gap-3 flex-wrap">
             <div>
               <p className="text-white font-semibold text-sm">Primary School Textbooks</p>
               <p className="text-gray-600 text-xs font-mono">NISR Primary.px · {summary.primaryBooksYear}</p>
             </div>
             {summary.primaryAvgRatio !== null && (
-              <div className="text-right">
+              <div className="text-right flex-shrink-0">
                 <p className="text-amber-400 font-bold text-lg tabular-nums">{summary.primaryAvgRatio} : 1</p>
                 <p className="text-gray-600 text-xs">avg students/book</p>
               </div>
             )}
           </div>
-          <div className="p-5">
+          <div className="p-4 sm:p-5 overflow-x-auto">
             <ResponsiveContainer width="100%" height={185}>
-              <BarChart data={primaryRatios} layout="vertical" margin={{ top: 0, right: 20, bottom: 0, left: 10 }}>
+              <BarChart data={primaryRatios} layout="vertical" margin={{ top: 0, right: 16, bottom: 0, left: 0 }}>
                 <XAxis type="number" tick={{ fill: '#4b5563', fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis type="category" dataKey="subject" tick={{ fill: '#9ca3af', fontSize: 11 }}
-                  axisLine={false} tickLine={false} width={145} />
+                <YAxis type="category" dataKey="subject" tick={{ fill: '#9ca3af', fontSize: 10 }}
+                  axisLine={false} tickLine={false} width={130}
+                  tickFormatter={v => v.length > 20 ? v.slice(0, 19) + '…' : v} />
                 <Tooltip {...TP} formatter={v => [`${v} : 1`, 'Students per book']} />
                 <Bar dataKey="ratio" fill="#f59e0b" radius={[0, 3, 3, 0]} fillOpacity={0.85} maxBarSize={20} />
               </BarChart>
@@ -499,24 +500,25 @@ export default function EducationPage() {
         </div>
 
         <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
-          <div className="px-5 py-4 border-b border-gray-800 flex items-center justify-between">
+          <div className="px-4 sm:px-5 py-4 border-b border-gray-800 flex items-center justify-between gap-3 flex-wrap">
             <div>
               <p className="text-white font-semibold text-sm">Lower Secondary Textbooks</p>
               <p className="text-gray-600 text-xs font-mono">NISR lower_secondary.px · {summary.secondaryBooksYear}</p>
             </div>
             {summary.secondaryAvgRatio !== null && (
-              <div className="text-right">
+              <div className="text-right flex-shrink-0">
                 <p className="text-violet-400 font-bold text-lg tabular-nums">{summary.secondaryAvgRatio} : 1</p>
                 <p className="text-gray-600 text-xs">avg students/book</p>
               </div>
             )}
           </div>
-          <div className="p-5">
+          <div className="p-4 sm:p-5 overflow-x-auto">
             <ResponsiveContainer width="100%" height={185}>
-              <BarChart data={secondaryRatios} layout="vertical" margin={{ top: 0, right: 20, bottom: 0, left: 10 }}>
+              <BarChart data={secondaryRatios} layout="vertical" margin={{ top: 0, right: 16, bottom: 0, left: 0 }}>
                 <XAxis type="number" tick={{ fill: '#4b5563', fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis type="category" dataKey="subject" tick={{ fill: '#9ca3af', fontSize: 11 }}
-                  axisLine={false} tickLine={false} width={145} />
+                <YAxis type="category" dataKey="subject" tick={{ fill: '#9ca3af', fontSize: 10 }}
+                  axisLine={false} tickLine={false} width={130}
+                  tickFormatter={v => v.length > 20 ? v.slice(0, 19) + '…' : v} />
                 <Tooltip {...TP} formatter={v => [`${v} : 1`, 'Students per book']} />
                 <Bar dataKey="ratio" fill="#8b5cf6" radius={[0, 3, 3, 0]} fillOpacity={0.85} maxBarSize={20} />
               </BarChart>
@@ -526,7 +528,7 @@ export default function EducationPage() {
       </div>
 
       {/* ── Raw data tables ───────────────────────────────── */}
-      <div className="grid md:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
           <div className="px-4 py-3 border-b border-gray-800">
             <p className="text-white font-semibold text-sm">ICT Use — Full Data Table</p>

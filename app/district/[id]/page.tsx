@@ -162,17 +162,17 @@ export default function DistrictPage({ params }: { params: Promise<{ id: string 
     .map(d => ({ ...d, result: computeEducationPriority(d, DEFAULT_BENCHMARKS) }));
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 space-y-6">
+    <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 space-y-6">
 
       {/* Breadcrumb */}
-      <div className="flex items-center gap-1.5 text-xs text-gray-600">
-        <Link href="/" className="hover:text-gray-400 transition-colors flex items-center gap-1">
+      <div className="flex items-center gap-1.5 text-xs text-gray-600 overflow-x-auto whitespace-nowrap pb-0.5">
+        <Link href="/" className="hover:text-gray-400 transition-colors flex items-center gap-1 flex-shrink-0">
           <ArrowLeft size={12} /> Dashboard
         </Link>
-        <ChevronRight size={12} />
-        <span>{district.province}</span>
-        <ChevronRight size={12} />
-        <span className="text-gray-400 font-medium">{district.name}</span>
+        <ChevronRight size={12} className="flex-shrink-0" />
+        <span className="flex-shrink-0">{district.province}</span>
+        <ChevronRight size={12} className="flex-shrink-0" />
+        <span className="text-gray-400 font-medium flex-shrink-0">{district.name}</span>
       </div>
 
       {/* Hero */}
@@ -198,7 +198,7 @@ export default function DistrictPage({ params }: { params: Promise<{ id: string 
       </HeroBanner>
 
       {/* ── Score ring + gap drivers + radar ─────────────── */}
-      <div className="grid md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
         {/* Score ring */}
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 flex flex-col items-center gap-5">
@@ -306,7 +306,7 @@ export default function DistrictPage({ params }: { params: Promise<{ id: string 
       <MistralRecommendations districtId={district.id} districtName={district.name} />
 
       {/* ── Indicator detail panels ───────────────────────── */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
         <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 space-y-4">
           <div className="flex items-center gap-1.5 border-b border-gray-800 pb-3">
@@ -396,7 +396,7 @@ export default function DistrictPage({ params }: { params: Promise<{ id: string 
             <p className="text-white font-semibold text-sm">Compare within {district.province}</p>
             <p className="text-gray-600 text-xs font-mono">education gap scores</p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-gray-800">
+          <div className="grid grid-cols-2 lg:grid-cols-4 divide-y lg:divide-y-0 lg:divide-x divide-gray-800">
             {nearby.map(n => (
               <Link key={n.id} href={`/district/${n.id}`}
                 className="p-5 hover:bg-gray-800/40 transition-colors">

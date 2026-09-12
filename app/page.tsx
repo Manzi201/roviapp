@@ -120,7 +120,7 @@ export default function HomePage() {
   })) ?? [];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 space-y-6 sm:space-y-8">
 
       {/* ── Hero ─────────────────────────────────────────── */}
       <HeroBanner
@@ -186,7 +186,7 @@ export default function HomePage() {
       </div>
 
       {/* ── Map + Priority list ──────────────────────────── */}
-      <div className="grid lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
         {/* Map */}
         <div className="lg:col-span-2 bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
@@ -207,7 +207,7 @@ export default function HomePage() {
               {provinces.map(p => <option key={p} value={p}>{p}</option>)}
             </select>
           </div>
-          <div className="h-[420px] p-2">
+          <div className="h-[280px] sm:h-[340px] md:h-[380px] lg:h-[420px] p-2">
             <EducationMap
               districts={filtered}
               selectedDistrict={selectedDistrict}
@@ -273,9 +273,9 @@ export default function HomePage() {
       </div>
 
       {/* ── Province gap chart + ICT trend ───────────────── */}
-      <div className="grid md:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+        <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-5">
           <p className="text-white font-semibold text-sm">Avg. Education Gap Score by Province</p>
           <p className="text-gray-600 text-xs font-mono mt-0.5 mb-4">
             higher = larger gap · NISR-informed model
@@ -297,7 +297,7 @@ export default function HomePage() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+        <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-5">
           <p className="text-white font-semibold text-sm">National ICT Adoption Trend</p>
           <p className="text-gray-600 text-xs font-mono mt-0.5 mb-4">
             % schools using ICT · NISR ICT_use.px · live data
@@ -323,9 +323,9 @@ export default function HomePage() {
       </div>
 
       {/* ── NST2 progress ─────────────────────────────────── */}
-      <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+      <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-5">
         <p className="text-white font-semibold text-sm mb-4">NST2 & Vision 2050 Education Targets — Progress</p>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
           {[
             {
               label: 'ICT in All Schools',
@@ -380,11 +380,11 @@ export default function HomePage() {
           </Link>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full text-xs">
+          <table className="w-full text-xs" style={{ minWidth: 520 }}>
             <thead>
               <tr className="border-b border-gray-800">
                 {['#', 'District', 'Province', 'Gap Score', 'Priority', 'ICT %', 'Smart %', 'Book Ratio', ''].map(h => (
-                  <th key={h} className="text-left py-2.5 px-3 text-gray-600 font-semibold uppercase tracking-wider">
+                  <th key={h} className="text-left py-2.5 px-3 text-gray-600 font-semibold uppercase tracking-wider whitespace-nowrap">
                     {h}
                   </th>
                 ))}
@@ -394,11 +394,11 @@ export default function HomePage() {
               {sorted.map((d, i) => (
                 <tr key={d.id} className="border-b border-gray-800/40 hover:bg-gray-800/20 transition-colors">
                   <td className="py-2.5 px-3 text-gray-700 font-mono">{String(i + 1).padStart(2, '0')}</td>
-                  <td className="py-2.5 px-3 text-white font-semibold">{d.name}</td>
-                  <td className="py-2.5 px-3 text-gray-500 hidden md:table-cell">{d.province}</td>
+                  <td className="py-2.5 px-3 text-white font-semibold whitespace-nowrap">{d.name}</td>
+                  <td className="py-2.5 px-3 text-gray-500 hidden md:table-cell whitespace-nowrap">{d.province}</td>
                   <td className="py-2.5 px-3">
                     <div className="flex items-center gap-2">
-                      <div className="w-12 bg-gray-800 rounded-sm h-1.5 overflow-hidden">
+                      <div className="w-10 sm:w-12 bg-gray-800 rounded-sm h-1.5 overflow-hidden hidden sm:block">
                         <div className="h-full"
                           style={{ width: `${d.result.priorityScore}%`, backgroundColor: LEVEL_COLOR[d.result.priorityLevel] }} />
                       </div>

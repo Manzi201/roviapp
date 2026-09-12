@@ -17,6 +17,11 @@ export const metadata: Metadata = {
     icon: '/icon.svg',
     shortcut: '/icon.svg',
   },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+  },
   openGraph: {
     title: 'ROVI — Rwanda Education Gap Intelligence',
     description: 'Education gap analysis powered by live NISR data.',
@@ -30,7 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="bg-gray-950 text-gray-100 antialiased">
         <Navbar />
-        <main className="pt-16 min-h-screen">{children}</main>
+        <main className="pt-14 min-h-screen">{children}</main>
         <Footer />
       </body>
     </html>

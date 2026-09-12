@@ -122,7 +122,8 @@ export default function AssistantPage() {
     d.toLocaleTimeString('en-RW', { hour: '2-digit', minute: '2-digit' });
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 flex flex-col gap-5" style={{ minHeight: 'calc(100vh - 4rem)' }}>
+    <div className="max-w-5xl mx-auto px-4 py-6 sm:py-8 flex flex-col gap-4 sm:gap-5"
+         style={{ minHeight: 'calc(100dvh - 3.5rem)' }}>
 
       {/* Hero */}
       <HeroBanner
@@ -159,7 +160,7 @@ export default function AssistantPage() {
           })}
         </div>
         {/* Queries */}
-        <div className="p-3 grid sm:grid-cols-2 gap-2">
+        <div className="p-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
           {SUGGESTED_GROUPS[activeGroup].queries.map(q => (
             <button
               key={q}
@@ -178,7 +179,7 @@ export default function AssistantPage() {
         {messages.map((msg, i) => (
           <div
             key={i}
-            className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
+            className={`flex gap-2 sm:gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
           >
             {/* Avatar */}
             <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
@@ -244,7 +245,7 @@ export default function AssistantPage() {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage(input)}
-            placeholder="Ask about ICT adoption, smart classrooms, textbook ratios, school gaps…"
+            placeholder="Ask about ICT, smart classrooms, textbooks…"
             disabled={loading}
             className="w-full bg-gray-900 border border-gray-700 text-white rounded-xl pl-9 pr-4 py-3 text-sm focus:outline-none focus:border-blue-600 placeholder-gray-700 disabled:opacity-60 transition-colors"
           />

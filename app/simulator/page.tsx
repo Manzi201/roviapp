@@ -65,7 +65,7 @@ function SimContent() {
   ] : [];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 space-y-6 sm:space-y-8">
 
       <HeroBanner
         badge="Policy Simulation · Education Gap · NST2 Intervention Modelling"
@@ -73,13 +73,13 @@ function SimContent() {
         subtitle="Model the projected impact of education interventions on a district's gap score before deployment. Based on NISR Education benchmarks."
       />
 
-      <div className="grid lg:grid-cols-5 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8">
 
         {/* Controls */}
         <div className="lg:col-span-2 space-y-5">
 
           {/* District selector */}
-          <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+          <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-5">
             <label className="text-gray-400 text-xs font-semibold uppercase tracking-wider block mb-2">
               Select District
             </label>
@@ -105,7 +105,7 @@ function SimContent() {
           </div>
 
           {/* Intervention sliders */}
-          <div className="bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-5">
+          <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-5 space-y-5">
             <div>
               <p className="text-white font-semibold text-sm">Configure Interventions</p>
               <p className="text-gray-600 text-xs font-mono mt-0.5">
@@ -177,7 +177,7 @@ function SimContent() {
         <div className="lg:col-span-3 space-y-5">
 
           {!hasRun ? (
-            <div className="bg-gray-900 border border-gray-800 border-dashed rounded-xl p-16 flex flex-col items-center gap-4 text-center">
+            <div className="bg-gray-900 border border-gray-800 border-dashed rounded-xl p-10 sm:p-16 flex flex-col items-center gap-4 text-center">
               <Sliders size={28} className="text-gray-700" />
               <p className="text-gray-500 font-medium text-sm">Configure interventions and click Run</p>
               <p className="text-gray-700 text-xs font-mono">
@@ -187,12 +187,12 @@ function SimContent() {
           ) : simResult ? (
             <>
               {/* Score comparison */}
-              <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-6">
                 <p className="text-white font-semibold text-sm mb-4">Gap Score Impact</p>
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="text-center bg-gray-800/50 rounded-xl p-4">
+                <div className="grid grid-cols-3 gap-3 sm:gap-4">
+                  <div className="text-center bg-gray-800/50 rounded-xl p-3 sm:p-4">
                     <p className="text-gray-500 text-xs font-semibold mb-1">BASELINE</p>
-                    <p className="text-4xl font-extrabold tabular-nums"
+                    <p className="text-3xl sm:text-4xl font-extrabold tabular-nums"
                       style={{ color: LEVEL_COLOR[simResult.baseline.priorityLevel] }}>
                       {simResult.baseline.priorityScore}
                     </p>
@@ -218,9 +218,9 @@ function SimContent() {
                     )}
                   </div>
 
-                  <div className="text-center bg-gray-800/50 rounded-xl p-4">
+                  <div className="text-center bg-gray-800/50 rounded-xl p-3 sm:p-4">
                     <p className="text-gray-500 text-xs font-semibold mb-1">SIMULATED</p>
-                    <p className="text-4xl font-extrabold tabular-nums"
+                    <p className="text-3xl sm:text-4xl font-extrabold tabular-nums"
                       style={{ color: LEVEL_COLOR[simResult.simulated.priorityLevel] }}>
                       {simResult.simulated.priorityScore}
                     </p>
@@ -233,7 +233,7 @@ function SimContent() {
               </div>
 
               {/* Pillar comparison */}
-              <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 sm:p-5">
                 <p className="text-white font-semibold text-sm mb-4">Pillar Gap Score Comparison</p>
                 <ResponsiveContainer width="100%" height={190}>
                   <BarChart data={pillarChart} barGap={4}>
