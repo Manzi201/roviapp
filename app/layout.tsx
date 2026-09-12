@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ThemeProvider from '@/components/ThemeProvider';
 
 export const metadata: Metadata = {
   title: 'ROVI — Rwanda Education Gap Intelligence',
@@ -13,15 +14,8 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Rwanda Analytics Lab' }],
   creator: 'Rwanda Analytics Lab',
-  icons: {
-    icon: '/icon.svg',
-    shortcut: '/icon.svg',
-  },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-  },
+  icons: { icon: '/icon.svg', shortcut: '/icon.svg' },
+  viewport: { width: 'device-width', initialScale: 1, maximumScale: 1 },
   openGraph: {
     title: 'ROVI — Rwanda Education Gap Intelligence',
     description: 'Education gap analysis powered by live NISR data.',
@@ -32,11 +26,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="bg-gray-950 text-gray-100 antialiased">
-        <Navbar />
-        <main className="pt-14 min-h-screen">{children}</main>
-        <Footer />
+    <html lang="en" suppressHydrationWarning>
+      <body className="antialiased transition-colors duration-300">
+        <ThemeProvider>
+          <Navbar />
+          <main className="pt-14 min-h-screen">{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

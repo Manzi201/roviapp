@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BarChart3, Monitor, Sliders, Search, Info, Menu, X } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import { BarChart3, Monitor, Sliders, Search, Info, Menu, X, Sun, Moon } from 'lucide-react';
 
 const navItems = [
   { href: '/',          label: 'Gap Map',     icon: BarChart3 },
@@ -12,6 +13,24 @@ const navItems = [
   { href: '/assistant', label: 'Data Query',  icon: Search    },
   { href: '/about',     label: 'About',       icon: Info      },
 ];
+
+function ThemeToggle() {
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === 'dark';
+
+  return (
+    <button
+      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+      aria-label="Toggle theme"
+      className="p-1.5 rounded-lg border border-gray-700 text-gray-400 hover:text-white hover:border-gray-500 transition-all"
+      title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+    >
+      {isDark
+        ? <Sun size={14} />
+        : <Moon size={14} />}
+    </button>
+  );
+}
 
 export default function Navbar() {
   const path = usePathname();
@@ -52,11 +71,16 @@ export default function Navbar() {
           </div>
 
           {/* Right side */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            {/* NISR badge — desktop only */}
             <div className="hidden lg:flex items-center gap-1.5">
               <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
               <span className="text-gray-700 text-xs font-mono">NISR API · Live</span>
             </div>
+
+            {/* Theme toggle */}
+            <ThemeToggle />
+
             {/* Hamburger — mobile only */}
             <button
               onClick={() => setOpen(v => !v)}
@@ -86,9 +110,11 @@ export default function Navbar() {
                 </Link>
               );
             })}
-            <div className="mx-5 mt-2 pt-2 border-t border-gray-800 flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
-              <span className="text-gray-600 text-xs font-mono">NISR API · Live</span>
+            <div className="mx-5 mt-2 pt-2 border-t border-gray-800 flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" />
+                <span className="text-gray-600 text-xs font-mono">NISR API · Live</span>
+              </div>
             </div>
           </div>
         )}
@@ -96,10 +122,7 @@ export default function Navbar() {
 
       {/* Backdrop */}
       {open && (
-        <div
-          className="fixed inset-0 z-40 md:hidden"
-          onClick={() => setOpen(false)}
-        />
+        <div className="fixed inset-0 z-40 md:hidden" onClick={() => setOpen(false)} />
       )}
     </>
   );

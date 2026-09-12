@@ -9,7 +9,7 @@ interface Props {
 
 export default function HeroBanner({ title, subtitle, badge, children }: Props) {
   return (
-    <div className="relative w-full overflow-hidden rounded-xl min-h-[150px] sm:min-h-[200px] md:min-h-[240px]">
+    <div className="relative w-full overflow-hidden rounded-xl min-h-[150px] sm:min-h-[200px] md:min-h-[240px] transition-colors duration-300">
       <div className="absolute inset-0 bg-gradient-to-r from-gray-950/92 via-gray-950/72 to-gray-950/30 rounded-xl" />
       <div className="absolute inset-0 bg-gradient-to-t from-gray-950/50 via-transparent to-transparent rounded-xl" />
       <div className="absolute inset-0 rounded-xl border border-gray-700/40 pointer-events-none" />

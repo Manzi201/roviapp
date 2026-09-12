@@ -33,7 +33,7 @@ export default function StatCard({
     trend === 'down' ? 'text-emerald-400' : 'text-gray-600';
 
   return (
-    <div className={`${a.card} border rounded-xl p-4 flex flex-col gap-3`}>
+    <div className={`${a.card} border rounded-xl p-4 flex flex-col gap-3 transition-colors duration-300`}>
       {/* Top row */}
       <div className="flex items-start justify-between">
         <p className="text-gray-500 text-xs font-medium uppercase tracking-wide leading-tight">{label}</p>

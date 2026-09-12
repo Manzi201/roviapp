@@ -1,83 +1,174 @@
 @import "tailwindcss";
 @import "leaflet/dist/leaflet.css";
 
-:root {
-  --background: #030712;
-  --foreground: #f9fafb;
+/* ── Design tokens ────────────────────────────────────────────
+   All colours go through CSS variables so light/dark
+   switch is a single class swap on <html>.               */
+
+:root,
+.dark {
+  /* Surfaces */
+  --bg-base:      #030712;
+  --bg-card:      #111827;
+  --bg-card-alt:  #1f2937;
+  --bg-input:     #1f2937;
+  --bg-hover:     rgba(255,255,255,0.04);
+
+  /* Borders */
+  --border:       #1f2937;
+  --border-light: #374151;
+
+  /* Text */
+  --text-primary:   #f9fafb;
+  --text-secondary: #9ca3af;
+  --text-muted:     #6b7280;
+  --text-faint:     #374151;
+
+  /* Brand */
+  --accent:       #3b82f6;
+  --accent-hover: #2563eb;
 }
 
-/* ── Fixed full-screen background image ─────────────────────
-   Kigali Convention Center — CC-BY-SA 4.0, Wikimedia Commons
-   background-attachment: fixed keeps it stationary on scroll  */
-html {
-  min-height: 100%;
+.light {
+  /* Surfaces */
+  --bg-base:      #f8fafc;
+  --bg-card:      #ffffff;
+  --bg-card-alt:  #f1f5f9;
+  --bg-input:     #f1f5f9;
+  --bg-hover:     rgba(0,0,0,0.04);
+
+  /* Borders */
+  --border:       #e2e8f0;
+  --border-light: #cbd5e1;
+
+  /* Text */
+  --text-primary:   #0f172a;
+  --text-secondary: #475569;
+  --text-muted:     #64748b;
+  --text-faint:     #94a3b8;
+
+  /* Brand */
+  --accent:       #2563eb;
+  --accent-hover: #1d4ed8;
 }
+
+/* ── Apply tokens to base elements ───────────────────────── */
+html { min-height: 100%; }
 
 body {
-  color: var(--foreground);
+  color: var(--text-primary);
+  background-color: var(--bg-base);
   font-family: ui-sans-serif, system-ui, sans-serif;
   min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
 
-  /* Full-screen fixed background */
-  background-color: #030712;
-  background-image: url("/kigali-bg.jpg");
+  /* Full-screen fixed background image */
+  background-image: url('/kigali-bg.jpg');
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
   background-repeat: no-repeat;
 }
 
-/* Dark overlay on top of the background — applied via pseudo-element
-   so the image shows through subtly beneath all content              */
+/* Dark overlay — darker in dark mode, lighter in light mode */
 body::before {
-  content: "";
+  content: '';
   position: fixed;
   inset: 0;
-  background: rgba(3, 7, 18, 0.88);
   z-index: 0;
   pointer-events: none;
+  transition: background 0.3s;
 }
 
-/* Everything must sit above the overlay */
-body > * {
-  position: relative;
-  z-index: 1;
+.dark body::before  { background: rgba(3, 7, 18, 0.88); }
+.light body::before { background: rgba(248, 250, 252, 0.82); }
+
+/* Everything sits above the overlay */
+body > * { position: relative; z-index: 1; }
+
+/* ── Themed utility classes ──────────────────────────────── */
+
+/* Cards */
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+}
+.card-alt {
+  background-color: var(--bg-card-alt);
+  border: 1px solid var(--border);
 }
 
 /* ── Leaflet tooltip ─────────────────────────────────────── */
 .rovi-tooltip {
-  background: #111827 !important;
-  border: 1px solid #374151 !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-light) !important;
   border-radius: 8px !important;
-  color: #f9fafb !important;
+  color: var(--text-primary) !important;
   font-size: 13px !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25) !important;
   padding: 6px 10px !important;
 }
-.rovi-tooltip::before {
-  display: none !important;
-}
+.rovi-tooltip::before { display: none !important; }
 
 /* ── Scrollbar ───────────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #111827;
-}
-::-webkit-scrollbar-thumb {
-  background: #374151;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #4b5563;
-}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-card); }
+::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
-/* Hide scrollbar utility — used on tab rows */
+/* Hide scrollbar utility */
 .scrollbar-none::-webkit-scrollbar { display: none; }
 .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
 
-* {
-  box-sizing: border-box;
+* { box-sizing: border-box; }
+
+/* ── Light mode overrides for Tailwind gray classes ─────────
+   Tailwind's gray-xxx classes are hardcoded. We override the
+   most-used ones so existing markup gets light-mode colours
+   without rewriting every className in every component.    */
+
+/* Backgrounds */
+.light .bg-gray-950  { background-color: #f8fafc !important; }
+.light .bg-gray-900  { background-color: #ffffff !important; }
+.light .bg-gray-800  { background-color: #f1f5f9 !important; }
+.light .bg-gray-800\/50 { background-color: rgba(241,245,249,0.5) !important; }
+.light .bg-gray-800\/40 { background-color: rgba(241,245,249,0.4) !important; }
+.light .bg-gray-800\/30 { background-color: rgba(241,245,249,0.3) !important; }
+.light .bg-gray-800\/20 { background-color: rgba(241,245,249,0.2) !important; }
+.light .bg-gray-700  { background-color: #e2e8f0 !important; }
+
+/* Navbar / fixed elements */
+.light .bg-gray-950\/95 { background-color: rgba(255,255,255,0.97) !important; }
+
+/* Borders */
+.light .border-gray-800    { border-color: #e2e8f0 !important; }
+.light .border-gray-800\/50 { border-color: rgba(226,232,240,0.5) !important; }
+.light .border-gray-800\/40 { border-color: rgba(226,232,240,0.4) !important; }
+.light .border-gray-700    { border-color: #cbd5e1 !important; }
+
+/* Text */
+.light .text-white        { color: #0f172a !important; }
+.light .text-gray-100     { color: #1e293b !important; }
+.light .text-gray-200     { color: #334155 !important; }
+.light .text-gray-300     { color: #475569 !important; }
+.light .text-gray-400     { color: #64748b !important; }
+.light .text-gray-500     { color: #64748b !important; }
+.light .text-gray-600     { color: #94a3b8 !important; }
+.light .text-gray-700     { color: #94a3b8 !important; }
+.light .text-gray-800     { color: #cbd5e1 !important; }
+
+/* Dividers */
+.light .divide-gray-800\/40 > * + * { border-color: rgba(226,232,240,0.4) !important; }
+.light .divide-gray-800\/50 > * + * { border-color: rgba(226,232,240,0.5) !important; }
+
+/* Input / select */
+.light input, .light select, .light textarea {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
 }
+.light input::placeholder { color: #94a3b8 !important; }
+
+/* Prose (markdown) */
+.light .prose-invert { --tw-prose-body: #334155; --tw-prose-headings: #0f172a; }
