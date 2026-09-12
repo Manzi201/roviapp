@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -15,13 +15,18 @@ export const metadata: Metadata = {
   authors: [{ name: 'Rwanda Analytics Lab' }],
   creator: 'Rwanda Analytics Lab',
   icons: { icon: '/icon.svg', shortcut: '/icon.svg' },
-  viewport: { width: 'device-width', initialScale: 1, maximumScale: 1 },
   openGraph: {
     title: 'ROVI — Rwanda Education Gap Intelligence',
     description: 'Education gap analysis powered by live NISR data.',
     type: 'website',
     locale: 'en_RW',
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
