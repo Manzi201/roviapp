@@ -14,7 +14,6 @@ import {
   computeEducationPriority, DEFAULT_BENCHMARKS,
   PILLAR_WEIGHTS, type GapDriver,
 } from '@/lib/educationScore';
-import StatCard from '@/components/StatCard';
 import IndicatorBar from '@/components/IndicatorBar';
 import HeroBanner from '@/components/HeroBanner';
 
@@ -297,10 +296,8 @@ export default function DistrictPage({ params }: { params: Promise<{ id: string 
             infrastructure={result.pillarScores.digital}
           />
           <div className="mt-3 grid grid-cols-2 gap-1 text-xs text-gray-700 font-mono">
-            <span>Economic → ICT</span>
-            <span>Social → Infrastructure</span>
-            <span>Agriculture → Resources</span>
-            <span>Infra → Digital</span>
+            <span>Source: NISR ICT_use.px</span>
+            <span>smart.px · Primary.px</span>
           </div>
         </div>
       </div>
@@ -390,14 +387,6 @@ export default function DistrictPage({ params }: { params: Promise<{ id: string 
             <p className="text-gray-700 text-xs font-mono mt-1">Source: NISR smart.px</p>
           </div>
         </div>
-      </div>
-
-      {/* ── Context stats ─────────────────────────────────── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <StatCard label="Poverty Rate"     value={`${district.povertyRate}%`}  sub="NISR EICV5 2023/24" accent="red"    />
-        <StatCard label="Rural Population" value={`${district.ruralPct}%`}     sub="NISR RPHC4 2022"   accent="amber"  />
-        <StatCard label="Youth NEET Rate"  value={`${district.youthNEET}%`}    sub="NISR LFS 2024"     accent="purple" />
-        <StatCard label="Level Coverage"   value={`${district.educationLevelCoverage}%`} sub="Education levels present" accent="blue" />
       </div>
 
       {/* ── Province comparison ───────────────────────────── */}

@@ -10,34 +10,42 @@ import {
 } from 'recharts';
 
 interface Props {
-  economic: number;
-  social: number;
-  agriculture: number;
-  infrastructure: number;
+  economic: number;       // mapped → ICT Readiness
+  social: number;         // mapped → Infrastructure
+  agriculture: number;    // mapped → Learning Resources
+  infrastructure: number; // mapped → Digital Equity
 }
+
+// Label map: old generic names → Education pillar names
+const LABEL_MAP: Record<string, string> = {
+  Economic:       'ICT Readiness',
+  Social:         'Infrastructure',
+  Agriculture:    'Resources',
+  Infrastructure: 'Digital Equity',
+};
 
 export default function PillarRadar({ economic, social, agriculture, infrastructure }: Props) {
   const data = [
-    { subject: 'Economic', value: economic, fullMark: 100 },
-    { subject: 'Social', value: social, fullMark: 100 },
-    { subject: 'Agriculture', value: agriculture, fullMark: 100 },
-    { subject: 'Infrastructure', value: infrastructure, fullMark: 100 },
+    { subject: 'ICT Readiness',  value: economic,       fullMark: 100 },
+    { subject: 'Infrastructure', value: social,          fullMark: 100 },
+    { subject: 'Resources',      value: agriculture,     fullMark: 100 },
+    { subject: 'Digital Equity', value: infrastructure,  fullMark: 100 },
   ];
 
   return (
     <ResponsiveContainer width="100%" height={220}>
-      <RadarChart data={data} margin={{ top: 10, right: 20, bottom: 10, left: 20 }}>
+      <RadarChart data={data} margin={{ top: 14, right: 24, bottom: 14, left: 24 }}>
         <PolarGrid stroke="#374151" />
         <PolarAngleAxis
           dataKey="subject"
-          tick={{ fill: '#9ca3af', fontSize: 12 }}
+          tick={{ fill: '#9ca3af', fontSize: 11 }}
         />
         <Radar
-          name="Risk Score"
+          name="Gap Score"
           dataKey="value"
           stroke="#ef4444"
           fill="#ef4444"
-          fillOpacity={0.25}
+          fillOpacity={0.28}
           strokeWidth={2}
         />
         <Tooltip
@@ -46,8 +54,9 @@ export default function PillarRadar({ economic, social, agriculture, infrastruct
             border: '1px solid #374151',
             borderRadius: '8px',
             color: '#f9fafb',
+            fontSize: '12px',
           }}
-          formatter={(v) => [`${v}/100`, 'Risk Score']}
+          formatter={(v) => [`${v}/100`, 'Gap Score']}
         />
       </RadarChart>
     </ResponsiveContainer>

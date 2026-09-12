@@ -1,5 +1,4 @@
 @import "tailwindcss";
-
 @import "leaflet/dist/leaflet.css";
 
 :root {
@@ -7,14 +6,45 @@
   --foreground: #f9fafb;
 }
 
+/* ── Fixed full-screen background image ─────────────────────
+   Kigali Convention Center — CC-BY-SA 4.0, Wikimedia Commons
+   background-attachment: fixed keeps it stationary on scroll  */
+html {
+  min-height: 100%;
+}
+
 body {
-  background: var(--background);
   color: var(--foreground);
   font-family: ui-sans-serif, system-ui, sans-serif;
   min-height: 100vh;
+
+  /* Full-screen fixed background */
+  background-color: #030712;
+  background-image: url("/kigali-bg.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
-/* Custom Leaflet tooltip styling */
+/* Dark overlay on top of the background — applied via pseudo-element
+   so the image shows through subtly beneath all content              */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 7, 18, 0.88);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Everything must sit above the overlay */
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Leaflet tooltip ─────────────────────────────────────── */
 .rovi-tooltip {
   background: #111827 !important;
   border: 1px solid #374151 !important;
@@ -24,12 +54,11 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
   padding: 6px 10px !important;
 }
-
 .rovi-tooltip::before {
   display: none !important;
 }
 
-/* Scrollbar */
+/* ── Scrollbar ───────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -45,7 +74,6 @@ body {
   background: #4b5563;
 }
 
-/* Smooth transitions */
 * {
   box-sizing: border-box;
 }
