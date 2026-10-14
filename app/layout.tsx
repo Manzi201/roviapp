@@ -43,11 +43,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="ROVI" />
         <meta name="theme-color" content="#2563eb" />
+        <script dangerouslySetInnerHTML={{ __html: `
+          if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+              navigator.serviceWorker.register('/sw.js');
+            });
+          }
+        `}} />
       </head>
       <body className="antialiased transition-colors duration-300">
         <ThemeProvider>
           <Navbar />
-          <main className="pt-14 min-h-screen">{children}</main>
+          <main className="pt-14 min-h-[calc(100dvh-3.5rem)] pb-16 md:pb-0">{children}</main>
           <Footer />
         </ThemeProvider>
       </body>
