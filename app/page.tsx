@@ -436,9 +436,8 @@ export default function HomePage() {
             { code: 'ICT_use.px',        desc: 'NISR — ICT use in teaching · live API' },
             { code: 'smart.px',          desc: 'NISR — Smart classrooms · live API' },
             { code: 'Primary.px',        desc: 'NISR — Primary textbook ratios · live API' },
-            { code: 'Edu_numb_scho.px',  desc: 'NISR — School counts · live API' },
-            { code: 'EICV5 2023/24',     desc: 'NISR — District poverty & welfare proxies' },
-            { code: 'RPHC4 2022',        desc: 'NISR — Population & school-age children' },
+            { code: 'lower_secondary.px',desc: 'NISR — Secondary textbook ratios · live API' },
+            { code: 'Edu_numb_scho.px',  desc: 'NISR — School counts by level · live API' },
           ].map(({ code, desc }) => (
             <div key={code} className="flex items-start gap-2 p-2 bg-gray-800/40 rounded-lg">
               <div className="w-1 h-full min-h-[20px] bg-blue-700 rounded-full flex-shrink-0 mt-0.5" />
@@ -450,8 +449,8 @@ export default function HomePage() {
           ))}
         </div>
         <p className="text-gray-700 text-xs font-mono mt-3">
-          District scores = NISR national benchmarks × NISR-informed district adjustment factors (EICV5 + RPHC4).
-          National benchmarks updated live from NISR PxWeb API on each page load.
+          All national benchmarks fetched live from NISR PxWeb API · Education / ICT, Science and Technology.
+          District gap scores derived from NISR Education benchmarks + NISR-informed district proxies.
         </p>
       </div>
     </div>

@@ -81,9 +81,9 @@ export default function AboutPage() {
           </table>
         </div>
         <div className="bg-gray-800/40 rounded-lg p-4 space-y-2 text-xs text-gray-400">
-          <p><strong className="text-gray-300">Priority levels:</strong> Critical (≥70) · High (50–69) · Moderate (30–49) · Low (&lt;30)</p>
-          <p><strong className="text-gray-300">District estimates:</strong> National NISR benchmarks are adjusted per district using NISR EICV5 2023/24 poverty rates, RPHC4 2022 urban-rural ratios, and LFS 2024 NEET rates as proxy adjustment factors.</p>
-          <p><strong className="text-gray-300">Transparency:</strong> All district scores are clearly labelled as NISR-informed estimates. National benchmarks are fetched live from NISR PxWeb API on every page load.</p>
+          <p><strong className="text-gray-300">Priority levels:</strong> Critical (≥58) · High (42–57) · Moderate (25–41) · Low (&lt;25)</p>
+          <p><strong className="text-gray-300">District estimates:</strong> National NISR Education benchmarks (ICT_use.px, smart.px, Primary.px) are adjusted per district using NISR-informed factors derived from school-level and geographic data.</p>
+          <p><strong className="text-gray-300">Transparency:</strong> All district scores are labelled as NISR-informed estimates. National benchmarks are fetched live from NISR PxWeb Education API on every page load.</p>
         </div>
       </section>
 

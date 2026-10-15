@@ -52,19 +52,19 @@ export default function Footer() {
 
           {/* Data sources */}
           <div className="space-y-3">
-            <p className="text-gray-400 text-xs font-semibold uppercase tracking-widest">Data Sources</p>
+            <p className="text-gray-400 text-xs font-semibold uppercase tracking-widest">NISR Datasets</p>
             <div className="space-y-2">
               {[
-                'EICV5 — Household Survey 2023/24',
-                'Labour Force Survey 2024',
-                'DHS 2020 — Health Survey',
-                'Seasonal Agricultural Survey 2024/25',
-                'RPHC4 — Population Census',
-                'NISR ICT Access Survey',
+                'ICT_use.px — ICT in teaching & learning',
+                'smart.px — Smart classrooms in schools',
+                'Primary.px — Primary textbook ratios',
+                'lower_secondary.px — Secondary textbooks',
+                'Edu_numb_scho.px — School counts by level',
               ].map((s) => (
-                <p key={s} className="text-gray-600 text-xs">{s}</p>
+                <p key={s} className="text-gray-600 text-xs font-mono">{s}</p>
               ))}
             </div>
+            <p className="text-gray-700 text-xs">All data: NISR PxWeb API · Live</p>
           </div>
         </div>
 
