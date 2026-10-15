@@ -1,6 +1,6 @@
 {
-  "name": "ROVI — Rwanda Education Intelligence",
-  "short_name": "ROVI",
+  "name": "EduGap Rwanda — Education Intelligence",
+  "short_name": "EduGap",
   "description": "Rwanda Education Gap Intelligence Platform. Live NISR data — ICT adoption, smart classrooms, textbook ratios. NST2 & Vision 2050 aligned.",
   "start_url": "/",
   "display": "standalone",

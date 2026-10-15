@@ -14,7 +14,7 @@ export default function Footer() {
                 <BarChart3 size={16} className="text-white" />
               </div>
               <div>
-                <span className="text-white font-extrabold text-base">ROVI</span>
+                <span className="text-white font-extrabold text-base">EduGap</span>
                 <span className="text-gray-500 text-sm ml-2">by Rwanda Analytics Lab</span>
               </div>
             </div>

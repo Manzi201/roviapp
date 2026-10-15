@@ -29,38 +29,44 @@ function buildSystemPrompt(): string {
     `poverty=${d.povertyRate}%, NEET=${d.youthNEET}%`
   ).join('\n');
 
-  return `You are the ROVI Education Data Query Tool — a professional education intelligence assistant for Rwanda. You help policymakers, planners, and researchers understand education gaps across Rwanda's 30 districts using NISR data.
+  return `You are the EduGap Rwanda Data Query Assistant — a knowledgeable education intelligence assistant for Rwanda. You help policymakers, planners, researchers, and students understand Rwanda's education sector using NISR data and national development goals.
 
-## Platform context
-ROVI (Rwanda Opportunity & Vulnerability Intelligence) — Education Sector focuses on:
-- Identifying education resource gaps (ICT, infrastructure, textbooks, smart classrooms)
-- Priority scoring for intervention targeting
-- NST2 and Vision 2050 education target tracking
+## Platform
+EduGap Rwanda — Education Gap Intelligence & Priority Platform, powered by live NISR PxWeb API data.
 
-## National NISR benchmarks (2021/22 — live from NISR PxWeb API)
+## Your knowledge covers
+- Rwanda education system (pre-primary, primary, secondary, TVET, higher)
+- NISR Education data: ICT adoption, smart classrooms, textbook ratios, school counts
+- Rwanda NST2 (National Strategy for Transformation) and Vision 2050 education targets
+- District-level education gap analysis across all 30 Rwanda districts
+- Rwanda education policy: REB, MINEDUC, RNEC, Smart Rwanda programme
+- General Rwanda geography, culture, and development context
+- Connections between education and economic outcomes (employment, poverty)
+
+## National NISR benchmarks (2021/22 — live NISR PxWeb API)
 - ICT adoption: ${DEFAULT_BENCHMARKS.ictPct}% of schools (NISR ICT_use.px)
 - Smart classrooms: ${DEFAULT_BENCHMARKS.smartPct}% of schools (NISR smart.px)
 - Primary textbook ratio: ${DEFAULT_BENCHMARKS.primaryBookRatio}:1 students/book (NISR Primary.px)
-- NST2 target: 100% ICT, 100% smart, 1:1 textbook ratio by 2029
+- Total schools: ~4,842 (NISR Edu_numb_scho.px 2021)
+- NST2 targets by 2029: 100% ICT, 100% smart classrooms, 1:1 textbook ratio
 
-## Education Gap Scoring methodology
-Composite score 0–100 (higher = larger gap = more intervention needed):
-- ICT Readiness: 35% weight
-- School Infrastructure: 30% weight
-- Learning Resources (books): 20% weight
-- Digital Equity (smart classrooms): 15% weight
+## Education Gap Score (EduGap model)
+Score 0–100 per district — higher = larger gap = more urgent intervention:
+- ICT Readiness: 35% | Infrastructure: 30% | Learning Resources: 20% | Digital Equity: 15%
+- Critical ≥58 | High 42–57 | Moderate 25–41 | Low <25
 
 ## All 30 Rwanda districts — education gap data
 ${districtLines}
 
-## Response guidelines
-- Always cite NISR data sources (ICT_use.px, smart.px, Primary.px, Edu_numb_scho.px, EICV5)
-- Reference NST2 targets when relevant
-- Be specific with district names and numbers
-- Provide actionable recommendations linked to REB/RNEC/Smart Rwanda programmes
-- Do NOT mention AI, language models, or that you are automated
-- Format with **bold** for district names and key figures
-- Keep responses concise and professional — this is a planning tool`;
+## Response style
+- Be helpful, clear, and informative — answer ANY question asked
+- For education/NISR topics: cite specific data sources and numbers
+- For general Rwanda topics: use your knowledge confidently  
+- For policy questions: reference NST2, Vision 2050, REB, MINEDUC
+- Use **bold** for key figures and district names
+- Keep answers focused and professional
+- You may answer questions about Rwanda history, culture, geography, government, economy etc.
+- If asked something outside Rwanda/education, still try to be helpful and answer`;
 }
 
 // ── Mistral call with retry ───────────────────────────────────
@@ -102,50 +108,42 @@ function localResponse(query: string): string {
     const lines = low.map((d, i) => `${i + 1}. **${d.name}** (${d.province}) — ${d.ictAdoptionPct}% ICT adoption`).join('\n');
     return `## Districts with Lowest ICT Adoption — NISR ICT_use.px 2021/22\n\n${lines}\n\n**National average:** ${DEFAULT_BENCHMARKS.ictPct}% · **NST2 target:** 100% by 2029\n\nThese districts require priority ICT equipment deployment and teacher training under the REB/RNEC ICT integration programme.`;
   }
-
   if (q.includes('smart') || q.includes('classroom')) {
     const low = [...scoredDistricts].sort((a, b) => a.smartClassroomPct - b.smartClassroomPct).slice(0, 5);
     const lines = low.map((d, i) => `${i + 1}. **${d.name}** (${d.province}) — ${d.smartClassroomPct}% smart classroom coverage`).join('\n');
-    return `## Districts with Lowest Smart Classroom Coverage — NISR smart.px 2021/22\n\n${lines}\n\n**National average:** ${DEFAULT_BENCHMARKS.smartPct}% · **NST2 target:** 100% by 2029\n\nSmart Rwanda programme rollout should prioritise these districts, focusing on secondary and TVET levels where digital skills directly link to employment.`;
+    return `## Districts with Lowest Smart Classroom Coverage — NISR smart.px 2021/22\n\n${lines}\n\n**National average:** ${DEFAULT_BENCHMARKS.smartPct}% · **NST2 target:** 100% by 2029`;
   }
-
   if (q.includes('book') || q.includes('textbook') || q.includes('ratio') || q.includes('resource')) {
     const high = [...scoredDistricts].sort((a, b) => b.primaryBookRatio - a.primaryBookRatio).slice(0, 5);
     const lines = high.map((d, i) => `${i + 1}. **${d.name}** (${d.province}) — ${d.primaryBookRatio}:1 students per book`).join('\n');
-    return `## Districts with Highest Textbook Shortage — NISR Primary.px 2021/22\n\n${lines}\n\n**National average:** ${DEFAULT_BENCHMARKS.primaryBookRatio}:1 · **NST2 target:** 1:1 ratio\n\nREB textbook procurement should prioritise these districts. Digital content libraries via OneLeap/eLearning platforms can serve as immediate supplements.`;
+    return `## Districts with Highest Textbook Shortage — NISR Primary.px 2021/22\n\n${lines}\n\n**National average:** ${DEFAULT_BENCHMARKS.primaryBookRatio}:1 · **NST2 target:** 1:1 ratio`;
   }
-
-  if (q.includes('infrastructure') || q.includes('school') || q.includes('construction') || q.includes('building')) {
+  if (q.includes('infrastructure') || q.includes('school') || q.includes('construction')) {
     const low = [...scoredDistricts].sort((a, b) => a.schoolsPer1000Children - b.schoolsPer1000Children).slice(0, 5);
-    const lines = low.map((d, i) => `${i + 1}. **${d.name}** — ${d.schoolsPer1000Children} schools/1000 children, ${d.totalSchoolsEstimate} total schools est.`).join('\n');
-    return `## Districts with Lowest School Density — NISR RPHC4 2022 + Edu_numb_scho.px\n\n${lines}\n\nNST2 targets expanding school access especially in rural areas. MINEDUC school construction programme should prioritise these districts to reduce catchment distances and improve enrollment rates.`;
+    const lines = low.map((d, i) => `${i + 1}. **${d.name}** — ${d.schoolsPer1000Children} schools/1000 children`).join('\n');
+    return `## Districts with Lowest School Density — NISR Edu_numb_scho.px\n\n${lines}\n\nNST2 targets expanding school access especially in rural areas.`;
   }
-
   if (q.includes('priority') || q.includes('gap') || q.includes('worst') || q.includes('critical') || q.includes('intervention')) {
     const top5 = [...scoredDistricts].sort((a, b) => b.result.priorityScore - a.result.priorityScore).slice(0, 5);
     const lines = top5.map((d, i) => `${i + 1}. **${d.name}** (${d.province}) — Gap Score ${d.result.priorityScore}/100 [${d.result.priorityLevel}]`).join('\n');
-    const drivers = top5[0].result.topDrivers.map(dr => `- ${dr.indicator}: ${dr.districtValue}${dr.unit.includes('%') ? '%' : ''}`).join('\n');
-    return `## Top Priority Districts for Education Intervention — ROVI Model\n\n${lines}\n\n**Top gap drivers in ${top5[0].name}:**\n${drivers}\n\nThese districts score highest on combined ICT deficit, infrastructure shortage, textbook gap, and digital equity indicators. Resource allocation under NST2 Social and Digital Transformation pillars should target these areas first.`;
+    return `## Top Priority Districts for Education Intervention\n\n${lines}\n\nThese districts score highest on combined ICT deficit, infrastructure shortage, textbook gap, and digital equity indicators.`;
   }
-
   if (q.includes('nst2') || q.includes('target') || q.includes('vision 2050') || q.includes('progress')) {
-    return `## NST2 Education Targets — Progress Status\n\n**ICT in all schools:** ${DEFAULT_BENCHMARKS.ictPct}% / 100% target · ${(100 - DEFAULT_BENCHMARKS.ictPct).toFixed(1)} pp remaining\n\n**Smart classrooms:** ${DEFAULT_BENCHMARKS.smartPct}% / 100% target · ${(100 - DEFAULT_BENCHMARKS.smartPct).toFixed(1)} pp remaining\n\n**Primary textbook ratio:** ${DEFAULT_BENCHMARKS.primaryBookRatio}:1 / 1:1 target\n\n*Sources: NISR ICT_use.px, smart.px, Primary.px — 2021/22*\n\nAt current trajectory, ICT adoption improved by ${DEFAULT_BENCHMARKS.ictPct - 34.9} pp from 2017 to 2021/22. Maintaining this pace, full coverage could be achieved by 2027–2028.`;
+    return `## NST2 Education Targets — Progress Status\n\n- **ICT in all schools:** ${DEFAULT_BENCHMARKS.ictPct}% / 100% — ${(100 - DEFAULT_BENCHMARKS.ictPct).toFixed(1)} pp remaining\n- **Smart classrooms:** ${DEFAULT_BENCHMARKS.smartPct}% / 100% — ${(100 - DEFAULT_BENCHMARKS.smartPct).toFixed(1)} pp remaining\n- **Primary textbook ratio:** ${DEFAULT_BENCHMARKS.primaryBookRatio}:1 → target 1:1\n\n*Sources: NISR ICT_use.px, smart.px, Primary.px — 2021/22*`;
   }
-
-  if (q.includes('province') || q.includes('region') || q.includes('kigali') || q.includes('eastern') || q.includes('northern') || q.includes('southern') || q.includes('western')) {
+  if (q.includes('province') || q.includes('kigali') || q.includes('eastern') || q.includes('northern') || q.includes('southern') || q.includes('western')) {
     const allProvinces = [...new Set(districtEducationData.map(d => d.province))];
     const summary = allProvinces.map(p => {
       const ds = scoredDistricts.filter(d => d.province === p);
-      const avgScore = Math.round(ds.reduce((s, d) => s + d.result.priorityScore, 0) / ds.length);
+      const avg = Math.round(ds.reduce((s, d) => s + d.result.priorityScore, 0) / ds.length);
       const avgICT = Math.round(ds.reduce((s, d) => s + d.ictAdoptionPct, 0) / ds.length);
-      return `- **${p}**: avg gap score ${avgScore}/100, avg ICT ${avgICT}%`;
+      return `- **${p}**: avg gap ${avg}/100, avg ICT ${avgICT}%`;
     }).join('\n');
-    return `## Education Gap by Province — ROVI Model\n\n${summary}\n\nKigali City has the lowest average gap score due to higher ICT infrastructure and lower poverty rates (NISR EICV5). Southern and Northern provinces show the highest average gaps, driven by low ICT adoption, limited school density, and higher textbook shortages.`;
+    return `## Education Gap by Province\n\n${summary}`;
   }
-
-  // Default
+  // General fallback — helpful broad response
   const top3 = [...scoredDistricts].sort((a, b) => b.result.priorityScore - a.result.priorityScore).slice(0, 3);
-  return `## ROVI Education Data Query Tool\n\nThis tool provides evidence-based education gap analysis across Rwanda's 30 districts using NISR data.\n\n**Top 3 priority districts:** ${top3.map(d => `**${d.name}** (${d.result.priorityScore})`).join(', ')}\n\n**Available queries:**\n- ICT adoption gaps by district\n- Smart classroom coverage\n- Textbook ratio shortfalls\n- School infrastructure density\n- Priority districts for intervention\n- NST2 education target progress\n- Provincial comparisons\n\n*Data: NISR ICT_use.px · smart.px · Primary.px · Edu_numb_scho.px · EICV5 · RPHC4*`;
+  return `## EduGap Rwanda — Education Intelligence Platform\n\nI can help you with any question about Rwanda's education sector, NISR data, or national development goals.\n\n**Current top priority districts:** ${top3.map(d => `**${d.name}** (score ${d.result.priorityScore})`).join(', ')}\n\n**Try asking about:**\n- ICT adoption or smart classrooms by district\n- Textbook ratios and shortages\n- School infrastructure gaps\n- NST2 education targets\n- Provincial comparisons\n- Rwanda education policy (REB, MINEDUC, Smart Rwanda)\n- Any Rwanda education topic\n\n*Data: NISR ICT_use.px · smart.px · Primary.px · Edu_numb_scho.px*`;
 }
 
 // ── Route handler ─────────────────────────────────────────────

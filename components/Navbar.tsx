@@ -54,8 +54,8 @@ export default function Navbar() {
               <BarChart3 size={14} className="text-white" />
             </div>
             <div className="leading-none">
-              <span className="text-white font-extrabold text-sm tracking-tight">ROVI</span>
-              <span className="text-gray-500 text-xs ml-1.5 hidden sm:inline">Education</span>
+              <span className="text-white font-extrabold text-sm tracking-tight">EduGap</span>
+              <span className="text-gray-500 text-xs ml-1.5 hidden sm:inline">Rwanda</span>
             </div>
           </Link>
 

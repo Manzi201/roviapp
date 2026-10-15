@@ -368,23 +368,21 @@ export default function HomePage() {
 
       {/* ── Full ranking table ────────────────────────────── */}
       <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
-        <div className="px-5 py-4 border-b border-gray-800 flex items-center justify-between">
+        <div className="px-4 sm:px-5 py-3 border-b border-gray-800 flex items-center justify-between gap-3">
           <div>
-            <p className="text-white font-semibold text-sm">All Districts — Education Gap Ranking</p>
-            <p className="text-gray-600 text-xs font-mono mt-0.5">
-              30 districts · composite priority score · NISR-informed model
-            </p>
+            <p className="text-white font-semibold text-sm">District Gap Ranking</p>
+            <p className="text-gray-600 text-xs font-mono">30 districts · NISR Education data</p>
           </div>
-          <Link href="/about" className="flex items-center gap-1 text-gray-600 hover:text-gray-400 text-xs transition-colors">
-            Methodology <ChevronRight size={12} />
+          <Link href="/about" className="flex items-center gap-1 text-gray-600 hover:text-gray-400 text-xs transition-colors flex-shrink-0">
+            How? <ChevronRight size={12} />
           </Link>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full text-xs" style={{ minWidth: 520 }}>
+          <table className="w-full text-xs" style={{ minWidth: 400 }}>
             <thead>
               <tr className="border-b border-gray-800">
-                {['#', 'District', 'Province', 'Gap Score', 'Priority', 'ICT %', 'Smart %', 'Book Ratio', ''].map(h => (
-                  <th key={h} className="text-left py-2.5 px-3 text-gray-600 font-semibold uppercase tracking-wider whitespace-nowrap">
+                {['#', 'District', 'Score', 'Level', 'ICT', 'Smart', ''].map(h => (
+                  <th key={h} className="text-left py-2 px-3 text-gray-600 font-semibold uppercase tracking-wider whitespace-nowrap">
                     {h}
                   </th>
                 ))}
@@ -393,30 +391,27 @@ export default function HomePage() {
             <tbody>
               {sorted.map((d, i) => (
                 <tr key={d.id} className="border-b border-gray-800/40 hover:bg-gray-800/20 transition-colors">
-                  <td className="py-2.5 px-3 text-gray-700 font-mono">{String(i + 1).padStart(2, '0')}</td>
-                  <td className="py-2.5 px-3 text-white font-semibold whitespace-nowrap">{d.name}</td>
-                  <td className="py-2.5 px-3 text-gray-500 hidden md:table-cell whitespace-nowrap">{d.province}</td>
-                  <td className="py-2.5 px-3">
-                    <div className="flex items-center gap-2">
-                      <div className="w-10 sm:w-12 bg-gray-800 rounded-sm h-1.5 overflow-hidden hidden sm:block">
-                        <div className="h-full"
-                          style={{ width: `${d.result.priorityScore}%`, backgroundColor: LEVEL_COLOR[d.result.priorityLevel] }} />
+                  <td className="py-2 px-3 text-gray-700 font-mono text-xs">{i + 1}</td>
+                  <td className="py-2 px-3 text-white font-semibold whitespace-nowrap">{d.name}</td>
+                  <td className="py-2 px-3">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-10 bg-gray-800 rounded-sm h-1.5 overflow-hidden hidden sm:block">
+                        <div className="h-full" style={{ width: `${d.result.priorityScore}%`, backgroundColor: LEVEL_COLOR[d.result.priorityLevel] }} />
                       </div>
                       <span className="text-white font-bold tabular-nums">{d.result.priorityScore}</span>
                     </div>
                   </td>
-                  <td className="py-2.5 px-3">
-                    <span className="font-semibold text-xs" style={{ color: LEVEL_COLOR[d.result.priorityLevel] }}>
+                  <td className="py-2 px-3">
+                    <span className="font-semibold text-xs whitespace-nowrap" style={{ color: LEVEL_COLOR[d.result.priorityLevel] }}>
                       {d.result.priorityLevel}
                     </span>
                   </td>
-                  <td className="py-2.5 px-3 text-gray-400 tabular-nums hidden lg:table-cell">{d.ictAdoptionPct}%</td>
-                  <td className="py-2.5 px-3 text-gray-400 tabular-nums hidden lg:table-cell">{d.smartClassroomPct}%</td>
-                  <td className="py-2.5 px-3 text-gray-400 tabular-nums hidden lg:table-cell">{d.primaryBookRatio}:1</td>
-                  <td className="py-2.5 px-3 text-right">
+                  <td className="py-2 px-3 text-gray-400 tabular-nums hidden sm:table-cell">{d.ictAdoptionPct}%</td>
+                  <td className="py-2 px-3 text-gray-400 tabular-nums hidden sm:table-cell">{d.smartClassroomPct}%</td>
+                  <td className="py-2 px-3 text-right">
                     <Link href={`/district/${d.id}`}
                       className="inline-flex items-center gap-0.5 text-gray-600 hover:text-blue-400 transition-colors">
-                      View <ChevronRight size={12} />
+                      → <ChevronRight size={11} />
                     </Link>
                   </td>
                 </tr>

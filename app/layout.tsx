@@ -5,9 +5,9 @@ import Footer from '@/components/Footer';
 import ThemeProvider from '@/components/ThemeProvider';
 
 export const metadata: Metadata = {
-  title: 'ROVI — Rwanda Education Gap Intelligence',
+  title: 'EduGap Rwanda — Education Intelligence Platform',
   description:
-    'Education Gap Intelligence & Priority Platform for Rwanda. Live NISR data — ICT adoption, smart classrooms, textbook ratios. NST2 & Vision 2050 aligned.',
+    'Rwanda Education Gap Intelligence Platform. Identifying where education resources are most needed using live NISR data. ICT, smart classrooms, textbooks. NST2 & Vision 2050.',
   keywords: [
     'Rwanda', 'NISR', 'education', 'ICT', 'NST2', 'smart classrooms',
     'textbooks', 'gap analysis', 'Vision 2050', 'Rwanda Analytics Lab',
@@ -20,8 +20,8 @@ export const metadata: Metadata = {
     apple: '/icons/icon-192.svg',
   },
   openGraph: {
-    title: 'ROVI — Rwanda Education Gap Intelligence',
-    description: 'Education gap analysis powered by live NISR data.',
+    title: 'EduGap Rwanda — Education Intelligence Platform',
+    description: 'Rwanda education gap analysis powered by live NISR data.',
     type: 'website',
     locale: 'en_RW',
   },
@@ -41,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="ROVI" />
+        <meta name="apple-mobile-web-app-title" content="EduGap" />
         <meta name="theme-color" content="#2563eb" />
         <script dangerouslySetInnerHTML={{ __html: `
           if ('serviceWorker' in navigator) {

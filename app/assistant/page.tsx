@@ -19,59 +19,59 @@ const SUGGESTED_GROUPS = [
     color: 'text-blue-400',
     queries: [
       'Which districts have the lowest ICT adoption in schools?',
-      'What is the national ICT adoption rate in Rwanda schools?',
       'Where should smart classroom rollout be prioritised?',
-      'How has ICT adoption in schools changed from 2017 to 2021/22?',
+      'How has ICT adoption changed from 2017 to 2021/22?',
+      'What is the gap between current ICT and the NST2 target?',
     ],
   },
   {
-    label: 'Textbooks & Resources',
+    label: 'Textbooks',
     icon: BookOpen,
     color: 'text-amber-400',
     queries: [
-      'Which subjects have the worst textbook shortage at primary level?',
-      'What is the current textbook ratio for primary schools?',
+      'Which subjects have the worst textbook shortage?',
       'Which districts need most textbook procurement support?',
-      'What is the secondary school textbook ratio per student?',
+      'What is the primary school textbook ratio nationally?',
+      'How does the secondary textbook ratio compare to primary?',
     ],
   },
   {
-    label: 'Infrastructure & Access',
+    label: 'Infrastructure',
     icon: School,
     color: 'text-purple-400',
     queries: [
       'Which districts have the lowest school density?',
-      'How many schools are there in Rwanda by education level?',
-      'Which provinces have the largest education infrastructure gaps?',
+      'Which provinces have the largest education gaps?',
       'What are NST2 targets for education in Rwanda?',
+      'Tell me about Rwanda education system',
     ],
   },
   {
-    label: 'Priority & Gaps',
+    label: 'Priority & Policy',
     icon: Cpu,
     color: 'text-red-400',
     queries: [
-      'Which districts are critical priority for education intervention?',
-      'What are the top education gap drivers in Southern Province?',
-      'Compare education gaps between Eastern and Western provinces',
-      'Which districts need immediate education investment?',
+      'Which districts are critical priority for intervention?',
+      'What is the Smart Rwanda programme?',
+      'What does REB do in Rwanda education?',
+      'Explain NST2 and Vision 2050 education goals',
     ],
   },
 ];
 
-const WELCOME = `## Rwanda Education Data Query Tool
+const WELCOME = `## EduGap Rwanda — Education Data Query
 
-This tool searches across NISR Education statistical databases to support evidence-based planning.
+Ask me anything about Rwanda's education sector, NISR data, or national development goals.
 
-**Available datasets (NISR PxWeb API):**
-- **ICT_use.px** — ICT use in teaching and learning (2017–2021/22)
-- **smart.px** — Smart classrooms in schools (2020/21–2021/22)
-- **Primary.px** — Primary school textbook ratios by subject (2018–2021/22)
-- **lower_secondary.px** — Secondary textbook ratios (2018–2021/22)
-- **Edu_numb_scho.px** — School counts by education level (2017–2021)
-- **EICV5 / LFS 2024 / RPHC4** — District poverty, NEET, population proxies
+**I can help with:**
+- Education gap analysis across Rwanda's 30 districts
+- NISR ICT, smart classroom, and textbook data
+- NST2 & Vision 2050 education targets
+- Rwanda education policy (REB, MINEDUC, Smart Rwanda)
+- School infrastructure and access
+- Any Rwanda education topic
 
-Select a suggested query or type your question below.`;
+Select a suggested query below or type your own question.`;
 
 export default function AssistantPage() {
   const [messages, setMessages] = useState<Message[]>([
