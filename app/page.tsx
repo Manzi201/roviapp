@@ -65,6 +65,8 @@ export default function HomePage() {
   const [filterProvince, setFilterProvince] = useState('All');
   const [selectedDistrict, setSelectedDistrict] = useState<string | undefined>();
   const [activeTab, setActiveTab] = useState<'map' | 'list'>('map');
+  const [page, setPage] = useState(0);
+  const PAGE_SIZE = 10;
 
   useEffect(() => {
     fetch('/api/education')
@@ -251,7 +253,7 @@ export default function HomePage() {
             <span className="text-white font-semibold text-sm">Top Priority Districts</span>
             <div className="flex rounded-lg overflow-hidden border border-gray-700">
               {(['map', 'list'] as const).map(t => (
-                <button key={t} onClick={() => setActiveTab(t)}
+                <button key={t} onClick={() => { setActiveTab(t); setPage(0); }}
                   className={`px-2.5 py-1 text-xs font-medium transition-colors ${
                     activeTab === t ? 'bg-blue-600 text-white' : 'text-gray-500 hover:text-gray-300'
                   }`}>
@@ -263,32 +265,66 @@ export default function HomePage() {
 
           {/* District list */}
           <div className="flex-1 overflow-y-auto">
-            {(activeTab === 'map' ? sorted.slice(0, 8) : sorted).map((d, i) => (
-              <Link key={d.id} href={`/district/${d.id}`}
-                className="group flex items-center gap-3 px-4 py-2.5 border-b border-gray-800/50 hover:bg-gray-800/40 transition-colors last:border-0">
-                <span className="text-gray-700 text-xs font-mono w-4 tabular-nums flex-shrink-0">{i + 1}</span>
-                <div className="flex-1 min-w-0">
-                  <p className="text-white text-xs font-semibold truncate group-hover:text-blue-400 transition-colors">
-                    {d.name}
-                  </p>
-                  <p className="text-gray-600 text-xs font-mono truncate">
-                    {d.province.replace(' Province', '')}
-                  </p>
-                </div>
-                <div className="flex-shrink-0 flex items-center gap-2">
-                  <div className="text-right">
-                    <p className="text-xs font-bold tabular-nums" style={{ color: LEVEL_COLOR[d.result.priorityLevel] }}>
-                      {d.result.priorityScore}
-                    </p>
-                    <p className="text-xs font-medium" style={{ color: LEVEL_COLOR[d.result.priorityLevel] }}>
-                      {d.result.priorityLevel}
-                    </p>
-                  </div>
-                  <ChevronRight size={12} className="text-gray-700 group-hover:text-gray-500" />
-                </div>
-              </Link>
-            ))}
+            {(() => {
+              const list = activeTab === 'map' ? sorted.slice(0, 8) : sorted;
+              const paged = activeTab === 'list'
+                ? list.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE)
+                : list;
+              return paged.map((d, i) => {
+                const rank = activeTab === 'list' ? page * PAGE_SIZE + i + 1 : i + 1;
+                return (
+                  <Link key={d.id} href={`/district/${d.id}`}
+                    className="group flex items-center gap-3 px-4 py-2.5 border-b border-gray-800/50 hover:bg-gray-800/40 transition-colors last:border-0">
+                    <span className="text-gray-700 text-xs font-mono w-4 tabular-nums flex-shrink-0">{rank}</span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-white text-xs font-semibold truncate group-hover:text-blue-400 transition-colors">
+                        {d.name}
+                      </p>
+                      <p className="text-gray-600 text-xs font-mono truncate">
+                        {d.province.replace(' Province', '')}
+                      </p>
+                    </div>
+                    <div className="flex-shrink-0 flex items-center gap-2">
+                      <div className="text-right">
+                        <p className="text-xs font-bold tabular-nums" style={{ color: LEVEL_COLOR[d.result.priorityLevel] }}>
+                          {d.result.priorityScore}
+                        </p>
+                        <p className="text-xs font-medium" style={{ color: LEVEL_COLOR[d.result.priorityLevel] }}>
+                          {d.result.priorityLevel}
+                        </p>
+                      </div>
+                      <ChevronRight size={12} className="text-gray-700 group-hover:text-gray-500" />
+                    </div>
+                  </Link>
+                );
+              });
+            })()}
           </div>
+
+          {/* Pagination — only shown on All 30 tab */}
+          {activeTab === 'list' && (
+            <div className="px-4 py-2.5 border-t border-gray-800 flex items-center justify-between gap-2">
+              <button
+                onClick={() => setPage(p => Math.max(0, p - 1))}
+                disabled={page === 0}
+                className="text-xs font-medium px-3 py-1.5 rounded-lg border border-gray-700 text-gray-400
+                  hover:text-white hover:border-gray-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              >
+                ← Prev
+              </button>
+              <span className="text-gray-600 text-xs font-mono">
+                {page * PAGE_SIZE + 1}–{Math.min((page + 1) * PAGE_SIZE, sorted.length)} of {sorted.length}
+              </span>
+              <button
+                onClick={() => setPage(p => Math.min(Math.ceil(sorted.length / PAGE_SIZE) - 1, p + 1))}
+                disabled={(page + 1) * PAGE_SIZE >= sorted.length}
+                className="text-xs font-medium px-3 py-1.5 rounded-lg border border-gray-700 text-gray-400
+                  hover:text-white hover:border-gray-600 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              >
+                Next →
+              </button>
+            </div>
+          )}
 
           {/* Summary footer */}
           <div className="px-4 py-2.5 border-t border-gray-800 bg-gray-950/40">
