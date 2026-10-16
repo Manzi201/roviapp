@@ -19,9 +19,9 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-gray-500 text-sm leading-relaxed max-w-sm">
-              Rwanda Opportunity &amp; Vulnerability Intelligence is a district-level
-              socioeconomic analysis platform built to support evidence-based planning
-              under NST2 and Vision 2050.
+              EduGap Rwanda is a district-level education gap intelligence platform
+              built to identify where education resources are most needed across Rwanda's 30 districts,
+              powered by live NISR Education data and aligned with NST2 and Vision 2050 goals.
             </p>
             <p className="text-gray-600 text-xs">
               All data sourced from the National Institute of Statistics of Rwanda (NISR).
