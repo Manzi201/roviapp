@@ -67,16 +67,23 @@ export interface DistrictEducationData {
 // Based on NISR EICV5 provincial poverty and urban-rural data
 // Higher factor = more below-average than national benchmark
 const PROVINCE_FACTORS: Record<string, {
-  ictAdjust: number;   // multiplier on national ICT% (< 1 = below average)
+  ictAdjust: number;
   smartAdjust: number;
-  bookAdjust: number;  // multiplier on book ratio (> 1 = more books needed)
-  infraAdjust: number; // multiplier on school density
+  bookAdjust: number;
+  infraAdjust: number;
 }> = {
-  'Kigali City':       { ictAdjust: 1.85, smartAdjust: 1.75, bookAdjust: 0.65, infraAdjust: 1.45 },
-  'Eastern Province':  { ictAdjust: 0.78, smartAdjust: 0.72, bookAdjust: 1.25, infraAdjust: 0.82 },
-  'Northern Province': { ictAdjust: 0.72, smartAdjust: 0.68, bookAdjust: 1.35, infraAdjust: 0.78 },
-  'Southern Province': { ictAdjust: 0.70, smartAdjust: 0.66, bookAdjust: 1.38, infraAdjust: 0.76 },
-  'Western Province':  { ictAdjust: 0.74, smartAdjust: 0.70, bookAdjust: 1.30, infraAdjust: 0.80 },
+  // Kigali City: urban, well-resourced. ~85% ICT adoption (highest)
+  'Kigali City':       { ictAdjust: 1.75, smartAdjust: 1.65, bookAdjust: 0.65, infraAdjust: 1.45 },
+  // Eastern Province: large rural province, ICT growing — national EICV5 shows below average
+  // Nyagatare (agro-business hub) and Rwamagana (closer to Kigali) higher than Kirehe/Gatsibo
+  'Eastern Province':  { ictAdjust: 1.15, smartAdjust: 1.05, bookAdjust: 1.15, infraAdjust: 0.88 },
+  // Northern Province: mountainous, rural — Musanze (tourism hub) higher, Burera/Rulindo lower
+  'Northern Province': { ictAdjust: 1.08, smartAdjust: 1.00, bookAdjust: 1.22, infraAdjust: 0.82 },
+  // Southern Province: high poverty districts (Nyaruguru, Nyamagabe) pull down average
+  // Huye (university town) significantly higher
+  'Southern Province': { ictAdjust: 1.06, smartAdjust: 0.98, bookAdjust: 1.25, infraAdjust: 0.80 },
+  // Western Province: Rubavu/Rusizi (border towns) well-resourced; Rutsiro/Ngororero lower
+  'Western Province':  { ictAdjust: 1.10, smartAdjust: 1.02, bookAdjust: 1.18, infraAdjust: 0.84 },
 };
 
 // National NISR benchmarks (2021/22 from NISR API)
